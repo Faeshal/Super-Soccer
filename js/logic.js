@@ -1,22 +1,21 @@
 const APIKEY = "744a068822a147b1b04d51e1881772ef";
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec"
+];
 
 // NOTE : Fungsi untuk merubah format tanggal dan bulan
 var formatDate = date => {
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sept",
-    "Oct",
-    "Nov",
-    "Dec"
-  ];
-
   return `${date.getDate()} ${
     monthNames[date.getMonth()]
   } ${date.getFullYear()} ${formatTime(date)}`;
@@ -139,13 +138,13 @@ function getStanding() {
             <img src=${team.team.crestUrl.replace(
               /^http:\/\//i,
               "https://"
-            )} class = "show-on-medium-and-up show-on-medium-and-down" alt="logo team" style="float:left;width:22px;height:22px;margin-right:20px">
+            )} class = "text-bold show-on-medium-and-up show-on-medium-and-down" alt="logo team" style="float:left;height:25px;width:25px;margin-right:10px">
             ${team.team.name}
             </p>
             <p class="hide-on-med-and-up">
             <img src=${
               team.team.crestUrl
-            }  alt="logo team" style="float:left;width:22px;height:22px;margin-right:20px">
+            }  alt="logo team" style="float:left;height:25px;width:25px;margin-right:10px">
             </p>
             </td>
               <td class="center-align">${team.playedGames}</td>
@@ -168,8 +167,8 @@ function getStanding() {
             <table class="responsive-table white-text grey darken-3" >
             <thead>
               <tr>
-                <th class="center-align">Position</th>
-                <th>Team</th>
+                <th class="center-align">Rank</th>
+                <th class="center-align">Team</th>
                 <th class="center-align">Played</th>
                 <th class="center-align">Won</th>
                 <th class="center-align">Draw</th>
