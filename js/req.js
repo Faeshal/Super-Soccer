@@ -88,12 +88,12 @@ function getStanding() {
                 <table class="responsive-table white-text grey darken-3" >
                 <thead>
                   <tr>
-                    <th class="center-align">Position</th>
-                    <th>Team</th>
-                    <th class="center-align">Played</th>
+                    <th class="center-align">Rank</th>
+                    <th class="center-align">Team</th>
+                    <th class="center-align">Play</th>
                     <th class="center-align">Won</th>
                     <th class="center-align">Draw</th>
-                    <th class="center-align">Lost</th>
+                    <th class="center-align">Lose</th>
                     <th class="center-align">GF</th>
                     <th class="center-align">GA</th>
                     <th class="center-align">GD</th>
@@ -172,14 +172,14 @@ function getStanding() {
               <tr>
                 <th class="center-align">Rank</th>
                 <th class="center-align">Team</th>
-                <th class="center-align">Played</th>
+                <th class="center-align">Play</th>
                 <th class="center-align">Won</th>
                 <th class="center-align">Draw</th>
-                <th class="center-align">Lost</th>
+                <th class="center-align">Lose</th>
                 <th class="center-align">GF</th>
                 <th class="center-align">GA</th>
                 <th class="center-align">GD</th>
-                <th class="center-align">Points</th>
+                <th class="center-align">Point</th>
               </tr>
             </thead>
             <tbody>` +
@@ -286,6 +286,9 @@ function getMatchByIdLeague() {
       <div class="col s12">
         <div class="card card-border grey darken-3 white-text">
           <div class="card-content">
+            <div class="center-align">
+              <i class="fas fa-broadcast-tower fa-2x" style="margin-bottom:5px !important;"></i>
+            </div>
             <div center-align>
               <div class="center-align" style="font-size: 20px !important;">${formatDate(
                 new Date(match[i].utcDate)
@@ -427,17 +430,20 @@ function memory(data) {
     dataMatchFavHtml += `
       <div class="col s12 m6 l6">
         <div class="card card-border grey darken-3 white-text">
-          <div class="card-content">
-            <div center-align>
-            <div class="center-align">${formatDate(
+        <div class="card-content">
+          <div class="center-align">
+          <i class="fas fa-thumbtack fa-2x" style="margin-bottom:4px;"></i>
+          </div>
+          <div class="center-align">
+            <div class="center-align"style="font-size: 20px !important;">${formatDate(
               new Date(match.match.utcDate)
             )}
             </div>
             <div class="row" style="margin:20px">
               <div class="col s5 truncate right-align">
-                <span class="white-text text-darken-2">  ${
-                  match.match.homeTeam.name
-                }</span>
+                  <span class="white-text text-darken-2">  ${
+                    match.match.homeTeam.name
+                  }</span>
               </div>
               <div class="col s2">
                 VS
@@ -530,7 +536,7 @@ function remove(bundle, data) {
     .catch(error => console.log(error));
 }
 
-// NOTE: validasi data favorit atau bukan
+// NOTE: validasi data untuk mengetahui data favorit atau bukan
 function validation(bundle, id) {
   return new Promise((resolve, reject) => {
     connection(idb)
@@ -552,7 +558,7 @@ function validation(bundle, id) {
   });
 }
 
-// NOTE : Tampung jadwal ketika menekan favorite
+// NOTE : Tampung jadwal ketika menekan button favorite
 function push(dataType, data) {
   var bundle = "";
   var targetBundle = {};
