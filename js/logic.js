@@ -215,12 +215,12 @@ function getMatchByIdLeague() {
         <div class="card card-border grey darken-3 white-text">
           <div class="card-content">
             <div center-align>
-              <div class="center-align">${formatDate(
+              <div class="center-align" style="font-size: 20px !important;">${formatDate(
                 new Date(match[i].utcDate)
               )}</div>
               <div class="row" style="margin:20px">
                 <div class="col s5 truncate center-align">
-                  <span class="white-text text-darken-2">  ${
+                  <span class="white-text text-darken-2 flow-text">  ${
                     match[i].homeTeam.name
                   }</span>
                   </div>
@@ -228,7 +228,7 @@ function getMatchByIdLeague() {
                     VS
                   </div>
                   <div class="col s5 truncate center-align">
-                  <span class="white-text text-darken-2">  ${
+                  <span class="white-text text-darken-2 flow-text">  ${
                     match[i].awayTeam.name
                   }</span>
                   </div>
@@ -325,10 +325,10 @@ function getMatchByIdLeague() {
 function getDetailMatchById() {
   return new Promise(function(resolve, reject) {
     var string = new URLSearchParams(window.location.search);
-    var idParam = string.get("id");
+    var numberKey = string.get("id");
     if ("caches" in window) {
       caches
-        .match("https://api.football-data.org/v2/matches/" + idParam)
+        .match("https://api.football-data.org/v2/matches/" + numberKey)
         .then(function(response) {
           if (response) {
             response.json().then(function(data) {
@@ -367,7 +367,7 @@ function getDetailMatchById() {
           }
         });
     }
-    fetch("https://api.football-data.org/v2/matches/" + idParam, {
+    fetch("https://api.football-data.org/v2/matches/" + numberKey, {
       headers: {
         "X-Auth-Token": APIKEY
       }
@@ -464,9 +464,9 @@ function memory(data) {
 // Nantinya akan dilempar di saved.html
 function getSavedDataById(dataType) {
   var string = new URLSearchParams(window.location.search);
-  var idParam = Number(string.get("id"));
+  var numberKey = Number(string.get("id"));
   if (dataType == "jadwal") {
-    takeBundle("savedMatch", idParam).then(match => {
+    takeBundle("savedMatch", numberKey).then(match => {
       document.getElementById(
         "matchDay"
       ).innerHTML = `Matchday - ${match.match.matchday}`;
@@ -515,7 +515,7 @@ function remove(bundle, data) {
         "<span class='pulse yellow-text center-align'>Remove</span>";
       M.toast({
         html: removeTips,
-        displayLength: 2000,
+        displayLength: 1500,
         inDuration: 300,
         outDuration: 375,
         classes: "rounded",
@@ -549,7 +549,7 @@ function validation(bundle, id) {
   });
 }
 
-// NOTE : Tampung jadwal yang ketika menekan save/allSave
+// NOTE : Tampung jadwal ketika menekan favorite
 function push(dataType, data) {
   var bundle = "";
   var targetBundle = {};
@@ -596,7 +596,7 @@ function push(dataType, data) {
         "<span class='pulse yellow-text center-align'>Save</span>";
       M.toast({
         html: successTips,
-        displayLength: 2000,
+        displayLength: 1500,
         inDuration: 300,
         outDuration: 375,
         classes: "rounded",
@@ -650,7 +650,7 @@ function grab(dataType) {
   }
 }
 
-// DATABASEJS
+// Koneksi IndexedDB
 function connection(idb) {
   var dbPromise = idb.open("football-faeshal", 1, function(upgradeDb) {
     if (!upgradeDb.objectStoreNames.contains("savedMatch")) {
