@@ -154,7 +154,7 @@
         var isFavorit = false;
         validation("savedMatch", id)
           .then(msg => {
-            console.log("statusData: resolve = " + msg);
+            console.log(msg);
             document.getElementById("iconFav").innerHTML = "Favorite";
             getSavedDataById("jadwal");
             isFavorit = true;

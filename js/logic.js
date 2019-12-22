@@ -215,9 +215,6 @@ function getMatchByIdLeague() {
         <div class="card card-border grey darken-3 white-text">
           <div class="card-content">
             <div center-align>
-              <h5 class="center-align white-text">Matchday - ${
-                match[i].matchday
-              }</h5>
               <div class="center-align">${formatDate(
                 new Date(match[i].utcDate)
               )}</div>
@@ -287,15 +284,12 @@ function getMatchByIdLeague() {
         <div class="card card-border grey darken-3 white-text">
           <div class="card-content">
             <div center-align>
-              <h5 class="center-align white-text">Matchday - ${
-                match[i].matchday
-              }</h5>
-              <div class="center-align">${formatDate(
+              <div class="center-align" style="font-size: 20px !important;">${formatDate(
                 new Date(match[i].utcDate)
               )}</div>
               <div class="row" style="margin:20px">
                 <div class="col s5 truncate center-align">
-                  <span class="white-text text-darken-2">  ${
+                  <span class="white-text text-darken-2 flow-text">  ${
                     match[i].homeTeam.name
                   }</span>
                   </div>
@@ -303,7 +297,7 @@ function getMatchByIdLeague() {
                     VS
                   </div>
                   <div class="col s5 truncate center-align">
-                  <span class="white-text text-darken-2">  ${
+                  <span class="white-text text-darken-2   ">  ${
                     match[i].awayTeam.name
                   }</span>
                   </div>
@@ -312,7 +306,7 @@ function getMatchByIdLeague() {
               <div class="center-align"> 
               <b><a class="center-align grey darken-2 waves-effect waves-light btn btn-small" href="../pages/saved.html?id=${
                 match[i].id
-              }">Detail</a></b>
+              }"><i class="far fa-eye" style="margin-right:5px;"></i> Check</a></b>
               </div>
           </div>
         </div>
@@ -432,9 +426,6 @@ function memory(data) {
         <div class="card card-border grey darken-3 white-text">
           <div class="card-content">
             <div center-align>
-              <h6 class="center-align white-text">Matchday: ${
-                match.match.matchday
-              }</h6>
             <div class="center-align">${formatDate(
               new Date(match.match.utcDate)
             )}
@@ -457,7 +448,7 @@ function memory(data) {
             <div class="center-align">
               <a class="grey darken-2 waves-effect waves-light btn" href="../pages/saved.html?id=${
                 match.id
-              }">Detail</a>
+              }"><i class="far fa-eye" style="margin-right:5px;"></i> Check</a>
             </div>
           </div>
         </div>
