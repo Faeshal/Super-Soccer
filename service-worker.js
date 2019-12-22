@@ -6,6 +6,7 @@ importScripts(
 //NOTE : Validasi apakah workbox berhasil diload
 // kalau berhasil maka lanjut simpan aset utama (Precaching)
 // & lakukan workbox strategi
+
 if (workbox) {
   console.log("Workbox Succesfully Load");
   workbox.precaching.precacheAndRoute([
@@ -50,6 +51,10 @@ if (workbox) {
       revision: "3"
     },
     {
+      url: "/css/load.css",
+      revision: "3"
+    },
+    {
       url: "/js/req.js",
       revision: "3"
     },
@@ -75,6 +80,10 @@ if (workbox) {
     },
     {
       url: "/image/bell.png",
+      revision: "3"
+    },
+    {
+      url: "/image/field.png",
       revision: "3"
     },
     {
