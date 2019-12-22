@@ -1,0 +1,23 @@
+/* Css Button UP
+/* ini digunakan untuk slide up menuju paling atas halaman */
+
+.section {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+}
+
+#topBtn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  font-size: 22px;
+  width: 45px;
+  height: 45px;
+  background: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  display: none;
+  border-radius: 50%;
+}

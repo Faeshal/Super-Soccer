@@ -55,6 +55,10 @@ if (workbox) {
       revision: "3"
     },
     {
+      url: "/css/topBtn.css",
+      revision: "3"
+    },
+    {
       url: "/js/req.js",
       revision: "3"
     },
@@ -72,6 +76,10 @@ if (workbox) {
     },
     {
       url: "/js/jquery-3.3.1.js",
+      revision: "3"
+    },
+    {
+      url: "/js/topBtn.js",
       revision: "3"
     },
     {
