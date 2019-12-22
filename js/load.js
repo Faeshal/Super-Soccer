@@ -1,6 +1,6 @@
-// jquery 3 loading image
+// loader dibuat dengan jquery 3
 // digunakan untuk mentriger animasi native yang sudah dibuat di Load.css
-// Lewat id Loading
+// melalui id Loading
 $(window).on("load", function() {
   $("#loading")
     .delay(100)

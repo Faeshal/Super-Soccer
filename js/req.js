@@ -1,6 +1,7 @@
+// NOTE : API KEY Football Data Org
 const APIKEY = "744a068822a147b1b04d51e1881772ef";
 
-// NOTE : Fungsi untuk merubah format tanggal dan bulan
+// NOTE : Array Nama Bulan untuk dipanggil di fungsi format date
 var monthArray = [
   "Jan",
   "Feb",
@@ -16,15 +17,17 @@ var monthArray = [
   "Dec"
 ];
 
+// NOTE : Fungsi Format Tanggal supaya formatnya (dd-mm-yyyy)
 function formatDate(date) {
   var d = date.getDate();
+  // NOTE : Array nama bulan dipanggil , agar format bulan tidak dalam angka
   var m = monthArray[date.getMonth()];
   var y = date.getFullYear();
   var clock = formatTime(date);
   return "" + (d <= 9 ? "0" + d : d) + "-" + m + "-" + y + " / " + clock;
 }
 
-// NOTE : Custom tanggal supaya menjadi format 12 (PM/AM)
+// NOTE : Custom jam supaya menjadi format 12 (PM/AM)
 function formatTime(date) {
   let hour = date.getHours();
   let min = date.getMinutes();
@@ -37,7 +40,8 @@ function formatTime(date) {
   return output;
 }
 
-// NOTE : Fetching Peringkat klasemen sementara
+// NOTE : Fungsi untuk Fetch Peringkat klasemen sementara
+// Menggunakan Kategori Liga Inggris (2021)
 function getStanding() {
   if ("caches" in window) {
     caches
@@ -81,7 +85,6 @@ function getStanding() {
 
               viewHTML +=
                 `
-                <br>
                 <h5 class="center-align white-text">STANDING</h5> 
                 <hr>
                 <br>
@@ -111,6 +114,17 @@ function getStanding() {
         }
       });
   }
+
+  // Bila menggunakan Axios
+
+  // axios.get(
+  //   "https://api.football-data.org/v2/competitions/2021/standings?standingType=TOTAL",
+  //   {
+  //     headers: {
+  //       "X-Auth-Token": APIKEY
+  //     }
+  //   }
+  // );
 
   fetch(
     "https://api.football-data.org/v2/competitions/2021/standings?standingType=TOTAL",
@@ -207,11 +221,13 @@ function getMatchByIdLeague() {
               var dataMatchesHtml = "";
               var match = data.matches;
               var maxLoopData = match.length;
-              var i = 0;
-              // NOTE : Batasi Pertanding hanya 40 saja yang tampil
               if (match.length > 40) {
                 maxLoopData = 40;
               }
+
+              // NOTE : Batasi Pertanding hanya 40 saja yang tampil
+              // dengan fungsi while Loop
+              var i = 0;
               while (i < maxLoopData) {
                 dataMatchesHtml += `
       <div class="col s12">
@@ -276,11 +292,13 @@ function getMatchByIdLeague() {
         var dataMatchesHtml = "";
         var match = data.matches;
         var maxLoopData = match.length;
-        var i = 0;
-        // NOTE : Batasi Pertanding hanya 40 saja yang tampil
         if (match.length > 40) {
           maxLoopData = 40;
         }
+
+        // NOTE : Batasi Pertanding hanya 40 saja yang tampil
+        // dengan fungsi while Loop
+        var i = 0;
         while (i < maxLoopData) {
           dataMatchesHtml += `
       <div class="col s12">
@@ -327,17 +345,64 @@ function getMatchByIdLeague() {
   });
 }
 
-// NOTE : Fetch jadwal detail jadwal berdasarkan ID
+// NOTE : Fungsi untuk menampilkan semua pertandingan favorit
+// akan dilempar di allSave.html melalu id="divSaved"
+function memory(data) {
+  var dataMatchFavHtml = "";
+  data.forEach(match => {
+    dataMatchFavHtml += `
+      <div class="col s12 m6 l6">
+        <div class="card card-border grey darken-3 white-text">
+        <div class="card-content">
+          <div class="center-align">
+          <i class="fas fa-thumbtack fa-2x" style="margin-bottom:4px;"></i>
+          </div>
+          <div class="center-align">
+            <div class="center-align"style="font-size: 20px !important;">${formatDate(
+              new Date(match.match.utcDate)
+            )}
+            </div>
+            <div class="row" style="margin:20px">
+              <div class="col s5 truncate right-align">
+                  <span class="white-text text-darken-2">  ${
+                    match.match.homeTeam.name
+                  }</span>
+              </div>
+              <div class="col s2">
+                VS
+              </div>
+              <div class="col s5 truncate left-align">
+                <span class="white-text text-darken-2">  ${
+                  match.match.awayTeam.name
+                }</span>
+              </div>
+            </div>    
+            <div class="center-align">
+              <a class="grey darken-2 waves-effect waves-light btn" href="../pages/saved.html?id=${
+                match.id
+              }"><i class="far fa-eye" style="margin-right:5px;"></i> Check</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  });
+  document.getElementById("divSaved").innerHTML = dataMatchFavHtml;
+}
+
+// NOTE : Fungsi untuk Fetch detail jadwal berdasarkan ID
 function getDetailMatchById() {
   return new Promise(function(resolve, reject) {
     var string = new URLSearchParams(window.location.search);
     var numberKey = string.get("id");
+
     if ("caches" in window) {
       caches
         .match("https://api.football-data.org/v2/matches/" + numberKey)
-        .then(function(response) {
+        .then(response => {
           if (response) {
-            response.json().then(function(data) {
+            response.json().then(data => {
               document.getElementById(
                 "matchDay"
               ).innerHTML = `Matchday - ${data.match.matchday}`;
@@ -348,7 +413,6 @@ function getDetailMatchById() {
                 data.match.homeTeam.name;
               document.getElementById("awayTeamName").innerHTML =
                 data.match.awayTeam.name;
-
               document.getElementById(
                 "numberOfMatches"
               ).innerHTML = `Total Matches: ${data.head2head.numberOfMatches}`;
@@ -394,6 +458,7 @@ function getDetailMatchById() {
         document.getElementById("kickOff").innerHTML = `${formatDate(
           new Date(data.match.utcDate)
         )}`;
+
         document.getElementById("homeTeamName").innerHTML =
           data.match.homeTeam.name;
         document.getElementById("awayTeamName").innerHTML =
@@ -424,53 +489,10 @@ function getDetailMatchById() {
   });
 }
 
-function memory(data) {
-  var dataMatchFavHtml = "";
-  data.forEach(match => {
-    dataMatchFavHtml += `
-      <div class="col s12 m6 l6">
-        <div class="card card-border grey darken-3 white-text">
-        <div class="card-content">
-          <div class="center-align">
-          <i class="fas fa-thumbtack fa-2x" style="margin-bottom:4px;"></i>
-          </div>
-          <div class="center-align">
-            <div class="center-align"style="font-size: 20px !important;">${formatDate(
-              new Date(match.match.utcDate)
-            )}
-            </div>
-            <div class="row" style="margin:20px">
-              <div class="col s5 truncate right-align">
-                  <span class="white-text text-darken-2">  ${
-                    match.match.homeTeam.name
-                  }</span>
-              </div>
-              <div class="col s2">
-                VS
-              </div>
-              <div class="col s5 truncate left-align">
-                <span class="white-text text-darken-2">  ${
-                  match.match.awayTeam.name
-                }</span>
-              </div>
-            </div>    
-            <div class="center-align">
-              <a class="grey darken-2 waves-effect waves-light btn" href="../pages/saved.html?id=${
-                match.id
-              }"><i class="far fa-eye" style="margin-right:5px;"></i> Check</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    `;
-  });
-  document.getElementById("divSaved").innerHTML = dataMatchFavHtml;
-}
+// SECTION : INDEXED DB
 
-// INDEXED DB
 // NOTE : Ambil Data jadwal jadwal yang sudah disave
-// Nantinya akan dilempar di saved.html
+// Nantinya akan ditempatkan di saved.html berdasarkan id yang ada
 function getSavedDataById(dataType) {
   var string = new URLSearchParams(window.location.search);
   var numberKey = Number(string.get("id"));
@@ -520,11 +542,12 @@ function remove(bundle, data) {
     })
     .then(() => {
       document.getElementById("iconFav").innerHTML = "UnFavorite";
+      // NOTE : Setting Notifikasi Toast dengan callback alert
       var removeTips =
         "<span class='pulse yellow-text center-align'>Remove</span>";
       M.toast({
         html: removeTips,
-        displayLength: 1500,
+        displayLength: 1100,
         inDuration: 300,
         outDuration: 375,
         classes: "rounded",
@@ -562,6 +585,7 @@ function validation(bundle, id) {
 function push(dataType, data) {
   var bundle = "";
   var targetBundle = {};
+
   if (dataType == "jadwal") {
     bundle = "savedMatch";
     targetBundle = {
@@ -601,11 +625,12 @@ function push(dataType, data) {
     })
     .then(() => {
       document.getElementById("iconFav").innerHTML = "favorite";
+      // NOTE : Setting Notifikasi Toast dengan callback alert
       var successTips =
         "<span class='pulse yellow-text center-align'>Save</span>";
       M.toast({
         html: successTips,
-        displayLength: 1500,
+        displayLength: 1100,
         inDuration: 300,
         outDuration: 375,
         classes: "rounded",
@@ -652,14 +677,17 @@ function getAll(bundle) {
 }
 
 function grab(dataType) {
-  if (dataType == "jadwal") {
+  if (dataType !== "jadwal") {
+    console.log("Data Kosong");
+  } else {
     getAll("savedMatch").then(data => {
       memory(data);
     });
   }
 }
 
-// Koneksi IndexedDB
+// NOTE: Koneksi IndexedDB
+// dipanggil berulang ulang di setiap fungsi indexeddb
 function connection(idb) {
   var dbPromise = idb.open("football-faeshal", 1, function(upgradeDb) {
     if (!upgradeDb.objectStoreNames.contains("savedMatch")) {
