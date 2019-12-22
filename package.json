@@ -1,0 +1,17 @@
+{
+  "name": "football-workbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "push.js",
+  "dependencies": {
+    "gh-pages": "^2.1.1",
+    "web-push": "^3.4.1",
+    "workbox-cli": "^4.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

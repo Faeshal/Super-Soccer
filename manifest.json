@@ -1,0 +1,27 @@
+{
+  "name": "Football App",
+  "gcm_sender_id": "291863375655",
+  "short_name": "Football",
+  "description": "Football Monitoring",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1d1f20",
+  "theme_color": "#0b0b0b",
+  "icons": [
+    {
+      "src": "/image/f128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/image/f256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/image/f512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

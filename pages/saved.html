@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Detail Match</title>
+    <meta name="description" content="My first PWA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../css/materialize.min.css" />
+    <link rel="stylesheet" href="../css/custom.css" />
+    <link rel="manifest" href="../manifest.json" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <meta name="theme-color" content="#0b0b0b" />
+  </head>
+  <body>
+    <!-- SECTION : Navigasi -->
+    <div class="navbar left-align">
+      <nav class="grey darken-4 white-text" role="navigation">
+        <div class="nav-wrapper container">
+          <a href="javascript:goBack()" class="left-align">Back</a>
+        </div>
+      </nav>
+    </div>
+    <!-- SECTION : Konten -->
+    <img src="../gif/versus.gif" alt="" />
+    <div class="container" id="body-content"></div>
+    <div class="container">
+      <div class="row valign-wrapper">
+        <div class="col s12">
+          <br />
+          <h5 class="center-align">DETAIL</h5>
+          <hr />
+          <br />
+          <div class="card card-border grey darken-3 white-text">
+            <div id="fabFav" class="fixed-action-btn">
+              <a class="btn btn-smll grey black-text" id="iconFav">
+                <i class="large material-icons"></i>
+              </a>
+            </div>
+
+            <div class="card-content">
+              <h5 id="matchDay" class="center-align">Matchday -</h5>
+              <div id="kickOff" class="center-align"></div>
+              <div id="venue" class="center-align"></div>
+
+              <div class="row" style="margin:20px">
+                <div class="col s5 right-align truncate">
+                  <span
+                    id="homeTeamName"
+                    class="white-text text-darken-2"
+                  ></span>
+                </div>
+                <div class="col s2 center-align">
+                  VS
+                </div>
+                <div class="col s5 left-align truncate">
+                  <span
+                    id="awayTeamName"
+                    class="white-text text-darken-2"
+                  ></span>
+                </div>
+              </div>
+
+              <div class="row center">
+                <div class="center-align" id="numberOfMatches">
+                  Number Of Matches:
+                </div>
+                <div class="center-align" id="totalGoals">total Goals:</div>
+                <br />
+
+                <div class="col s4 right-align">
+                  <span
+                    id="homeTeamWins"
+                    class="white-text text-darken-2"
+                  ></span>
+                </div>
+                <div class="col s4">WINS</div>
+                <div class="col s4 left-align">
+                  <span
+                    id="awayTeamWins"
+                    class="white-text text-darken-2"
+                  ></span>
+                </div>
+                <div class="col s4 right-align">
+                  <span
+                    id="homeTeamDraws"
+                    class="white-text text-darken-2"
+                  ></span>
+                </div>
+                <div class="col s4">DRAWS</div>
+                <div class="col s4 left-align">
+                  <span
+                    id="awayTeamDraws"
+                    class="white-text text-darken-2"
+                  ></span>
+                </div>
+
+                <div class="col s4 right-align">
+                  <span
+                    id="homeTeamLosses"
+                    class="white-text text-darken-2"
+                  ></span>
+                </div>
+                <div class="col s4">LOSSES</div>
+                <div class="col s4 left-align">
+                  <span
+                    id="awayTeamLosses"
+                    class="white-text text-darken-2"
+                  ></span>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION : Javascript -->
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
+    ></script>
+    <script src="../js/logic.js"></script>
+    <script src="../js/idb.js"></script>
+    <script src="../js/materialize.min.js"></script>
+    <script type="text/javascript">
+      function goBack() {
+        window.history.back();
+      }
+    </script>
+    <!-- NOTE : Service Worker -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+        var string = new URLSearchParams(window.location.search);
+        var id = Number(string.get("id"));
+        var isFavorit = false;
+        validation("savedMatch", id)
+          .then(msg => {
+            console.log("statusData: resolve = " + msg);
+            document.getElementById("iconFav").innerHTML = "Favorite";
+            getSavedDataById("jadwal");
+            isFavorit = true;
+          })
+          .catch(msg => {
+            console.log(msg);
+            document.getElementById("iconFav").innerHTML = "UnFavorite";
+            getDetailMatchById();
+            isFavorit = false;
+          });
+
+        var iconFav = document.getElementById("iconFav");
+
+        iconFav.onclick = function() {
+          console.log("Tombol FAB di klik.");
+          if (isFavorit) {
+            remove("savedMatch", id);
+            isFavorit = false;
+          } else {
+            item = getDetailMatchById();
+            item.then(function(jadwal) {
+              push("jadwal", jadwal);
+            });
+            isFavorit = true;
+          }
+        };
+      });
+    </script>
+  </body>
+</html>
