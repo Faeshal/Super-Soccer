@@ -297,7 +297,7 @@ function getMatchByIdLeague() {
                     VS
                   </div>
                   <div class="col s5 truncate center-align">
-                  <span class="white-text text-darken-2   ">  ${
+                  <span class="white-text text-darken-2 flow-text">  ${
                     match[i].awayTeam.name
                   }</span>
                   </div>
