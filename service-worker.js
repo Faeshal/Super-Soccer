@@ -50,7 +50,7 @@ if (workbox) {
       revision: "3"
     },
     {
-      url: "/js/logic.js",
+      url: "/js/req.js",
       revision: "3"
     },
     {

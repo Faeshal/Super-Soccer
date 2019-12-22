@@ -1,5 +1,7 @@
 const APIKEY = "744a068822a147b1b04d51e1881772ef";
-const monthNames = [
+
+// NOTE : Fungsi untuk merubah format tanggal dan bulan
+var monthArray = [
   "Jan",
   "Feb",
   "Mar",
@@ -8,18 +10,19 @@ const monthNames = [
   "Jun",
   "Jul",
   "Aug",
-  "Sept",
+  "Sep",
   "Oct",
   "Nov",
   "Dec"
 ];
 
-// NOTE : Fungsi untuk merubah format tanggal dan bulan
-var formatDate = date => {
-  return `${date.getDate()} ${
-    monthNames[date.getMonth()]
-  } ${date.getFullYear()} ${formatTime(date)}`;
-};
+function formatDate(date) {
+  var d = date.getDate();
+  var m = monthArray[date.getMonth()];
+  var y = date.getFullYear();
+  var clock = formatTime(date);
+  return "" + (d <= 9 ? "0" + d : d) + "-" + m + "-" + y + " / " + clock;
+}
 
 // NOTE : Custom tanggal supaya menjadi format 12 (PM/AM)
 function formatTime(date) {
