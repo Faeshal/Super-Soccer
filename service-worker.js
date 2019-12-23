@@ -172,6 +172,7 @@ if (workbox) {
 
   //NOTE : cache first : semua aset akan diambil dari dalam cache.
   // kalau ga ada , maka lakukan request lewat jaringan
+
   workbox.routing.registerRoute(
     new RegExp("/js/"),
     workbox.strategies.cacheFirst()
