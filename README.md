@@ -4,7 +4,7 @@
 ![jquery](https://img.shields.io/badge/JQuery-V.3.3.1-lightgrey)
 
 ![preview](https://i.postimg.cc/qvQCtfvt/supper-soccer.png)
-
+**Live Demo :** [**https://soccer-last.now.sh/**](https://soccer-last.now.sh/)
 **Consume API From :** [**https://www.football-data.org/**](https://www.football-data.org/)
  
 Build Using : 
